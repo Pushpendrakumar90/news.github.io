@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google news API data</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <link rel="stylesheet" href="googleNews.css">
+        <style>
+            select{
+    border: none;
+    background-color: none;
+}
+.letestNewsBox{
+    /* display: grid;
+    place-items: center; */
+    display: flex;
+    align-items: center;
+    
+}
+body{
+    background-color: #f8f5f5;
+    margin: 0;
+    padding: 0;
+}
+.logo{
+    font-weight: 900;
+    font-size: 30px;
+}
+        </style>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light pt-4 sticky-top" style="background-color: #e3f2fd;">
+        <div class="container">
+            <a class="navbar-brand text-danger logo" href="#">LATEST News</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    </li>
+                    
+                  <select class="form-select" aria-label="Default select example" id="selCountry" onchange="getNews(event, this)">
+                        <option selected value="india" >India</option>
+                        <option value="uttar pradesh">UP</option>
+                        <option value="madhya pradesh">MP</option>
+                        <option value="bihar">Bihar</option>
+                        <option value="delhi">Delhi</option>
+                        <option value="haryana">haryana</option>
+                        <option value="udisha">udisha</option>
+                        <option value="gujrat">Gujrat</option>
+                        <option value="maharastra">maharastra</option>
+                    </select>
+                    <select class="form-select" aria-label="Default select example" id="selType" onchange="getNews(event, this)">
+                        <option  value="entertainment" selected>Entertainment</option>
+                        <option value="bigboss">Big boss</option>
+                        <option value="bollywood">Bollywood</option>
+                        <option value="video">video</option>
+                        <option value="sauthcinema">sauth cinema</option>
+                        <option value="web story">web story</option>
+                    </select>
+
+                    <select class="form-select" aria-label="Default select example" id="selFor" onchange="getNews(event, this)">
+                        <option selected value="election">Election</option>
+                        <option value="my seat">my seat</option>
+                        <option value="exit poll">exit poll</option>
+                        <option value="sechdule">sechdule</option>
+                        <option value="2025 result">2025 result</option>
+                    </select>
+
+                    <select class="form-select" aria-label="Default select example" id="selLang" disabled>
+                        <option value="hindi">hindi</option>
+                        <option value="english" selected>english</option>
+                        <option value="urdu">urdu</option>
+                    </select>
+
+                    
+                </ul>
+                <form class="d-flex " onsubmit="getNews(event)">
+                    <input class="form-control me-2" type="search" id="search" placeholder="search whatever..." aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- lestest news -->
+     <div class="container bg-danger mt-3 rounded text-white">
+        <div class="row">
+            <p class="d-flex justify-right"><i class="letestNewsBox"><b >Latest News:     </b> </i> <marquee behavior="alternate" scrolldelay="500" direction="up" scrollamount="12"><span id="latestNews">
+ Gujarat: JP Nadda holds meeting with sworn-in ministers on Chief Minister's Voice </span></marquee></p>
+        </div>
+     </div>
+
+    <!-- output table -->
+     <div class="container py-3 ">
+        <span id="totalResult" class="pb-3"></span>
+        <div class="output d-flex flex-wrap justify-center mt-2" id="output"></div>
+     </div>
+
+
+     <!-- carousel latest  news -->
+      <div class="container">
+      <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://timesofindia.indiatimes.com/thumb/msid-79587724,width-1280,height-720,resizemode-4/79587724.jpg" class="d-block w-100" alt="image" height="450px">
+    </div>
+    <div class="carousel-item">
+      <img src="https://ps.w.org/live-news-lite/assets/banner-772x250.png?rev=3189462" class="d-block w-100" alt="image" height="450px">
+    </div>
+    <div class="carousel-item">
+      <img src="https://i.ytimg.com/vi/IvA8tQQ-AWw/maxresdefault.jpg" class="d-block w-100" alt="image" height="450px">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+</div>
+
+
+
+    <script src="googleNews.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+        <script>
+            let display = document.getElementById("output");
+var table = document.createElement("table");
+let latestNews = document.getElementById("latestNews");
+let totalResult = document.getElementById("totalResult");
+let selLang = document.getElementById("selLang").value;
+
+
+let searchVal = document.getElementById("search");
+
+// if search ==== empty so display it's.
+if (searchVal.value == "") {
+    // getNews();
+}
+// get data from data function-----------------------------------------------------------
+function getNews(event, target = 0) {
+    let selCountry = document.getElementById("selCountry").value;
+    let selType = document.getElementById("selType").value;
+    let selFor = document.getElementById("selFor").value;
+
+    let search = searchVal.value.trim();
+    if (search != "") {
+        event.preventDefault();
+        searchVal.focus();
+    }
+    // sel country call fun-
+    if (target.value == selCountry) {
+        search = selCountry;
+    }
+    // sel industry call fun-
+    if (target.value == selType) {
+        search = selType;
+    }
+    // sel type call fun-
+    if (target.value == selFor) {
+        search = selFor;
+    }
+
+
+    if (search == "") {
+        search = "up";
+    }
+
+    fetch(`https://newsdata.io/api/1/latest?apikey=pub_680b3896e7df4311a9d0debc63cf5356&q=${search}`)
+        .then(data => data.json()
+            .then(res => {
+
+                totalResult.innerHTML = (res) ? `"${res.results.length}"` + " of total result " + `"${res.totalResults}"` : "";
+
+                latestNews.innerHTML = res.results[5].title + " - " + res.results[5].pubDate;
+                // insert loop for display value
+                table.innerHTML = "";
+                display.innerHTML = "";
+                for (let data of res.results) {
+                    create(table, data.image_url, data.description, data.pubDate);
+                }
+
+            })
+            .catch(err => {
+                display.innerHTML = "Page doesn't found ! : " + err + " - '" + searchVal.value + "'";
+                console.log(err);
+                
+            })
+        )
+
+
+}
+
+// create data in html page using DOM---------------------------------------------------------------------------
+function create(table, key, value, pubDate) {
+
+    let tr = document.createElement("tr");
+    tr.style.border = "1px solid black";
+    tr.style.padding = "10px";
+    let td = document.createElement("td");
+    let b = document.createElement("b");
+
+    let img = document.createElement("img");
+    img.alt = `search... IMG`;
+    img.src = key;
+    img.height = "80";
+    img.style.padding = "5px";
+    img.width = "120";
+    td.appendChild(img);
+    b.innerHTML = ` ${value} <i class="text-warning p-3">UPDATED : ${pubDate}</i> `;
+    td.appendChild(b);
+
+    tr.appendChild(td)
+    table.appendChild(tr);
+    display.appendChild(table)
+
+}
+
+
+
+
+
+
+        </script>
+</body>
+
+</html>
